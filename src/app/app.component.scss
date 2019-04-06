@@ -1,0 +1,107 @@
+@import "../styles.scss";
+
+.container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.todo-wrapper {
+  height: 700px;
+  width: 500px;
+  background: linear-gradient(to bottom right, $color1, $color2, $color5, $color4, $color3);
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.todo-title-wrapper {
+  text-align: center;
+  padding: 20px;
+}
+
+.todo-title {
+  display: block;
+  font-size: 2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.line {
+  display: inline-block;
+  height: 4px;
+  width: 300px;
+  border-radius: 2px;
+  background: linear-gradient(to right, $color1, $color2, $color5, $color4, $color3);
+}
+
+.todo-list {
+  height: 100%;
+  width: 100%;
+  background: white;
+  border-radius: 5px;
+}
+
+.todo-input-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+.todo-input {
+  font-size: 1.4rem;
+  flex: 1 1 0;
+  height: 100%;
+  padding: 5px;
+  margin-right: 5px;
+  border-radius: 5px;
+  border: 2px solid $color5;
+  color: darken(#cdcdcd, 30%);
+  transition: border 0.2s ease;
+}
+
+.todo-input:focus {
+  outline: none !important;
+  border: 2px solid $color3;
+}
+
+.todo-input::placeholder {
+  color: #cdcdcd;
+  transition: color 0.2s ease;
+}
+
+.todo-input-button {
+  box-sizing: content-box;
+  margin-left: 5px;
+  font-size: 1.4rem;
+  height: 100%;
+  padding: 6px;
+  background: $color5;
+  color: white;
+  border-radius: 5px;
+  border: none;
+  transition: background 0.3s ease;
+}
+
+.todo-input-button:hover {
+  cursor: pointer;
+  background: $color4;
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.todo-box:last-child {
+  border: none;
+}
+
+.todo-drag-list.cdk-drop-list-dragging .todo-box:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}

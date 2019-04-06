@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="todo-wrapper">
+    <div class="todo-list">
+      <div class="todo-title-wrapper">
+        <span class="todo-title">{{ list_name }}</span>
+        <span class="line"></span>
+      </div>
+      <div class="todo-input-wrapper">
+        <input type="text" name="todo" [(ngModel)]="todo_title" placeholder="Add a Task" class="todo-input">
+        <button type="button" name="addTodo" class="todo-input-button" (click)="addTodo()">Add</button>
+      </div>
+      <div cdkDropList (cdkDropListDropped)="drop($event)" class="todo-drag-list">
+        <div class="todo-box" *ngFor="let todo of todos" cdkDrag>
+          <todo [todo]="todo" (deleted)="onDelete($event)" (edited)="onEdit($event)"></todo>
+        </div>
+      </div>
+      <ng-template #noItems>
+        <div class="">
+          Fetching items...
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

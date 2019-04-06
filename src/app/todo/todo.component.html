@@ -1,0 +1,13 @@
+<div class="todo" (click)="editTodo()">
+  <span class="todo-title">
+    <span *ngIf="edit">
+      <input type="text" [(ngModel)]="todo.title" (keyup.enter)="saveTodo()" (blur)="saveTodo()" #title>
+    </span>
+    <span *ngIf="!edit">{{ todo.title }}</span>
+  </span>
+  <span class="todo-icons">
+    <button type="button" name="save" (click)="saveTodo()" *ngIf="edit"><i class="fas fa-save"></i></button>
+    <button type="button" name="edit" (click)="editTodo()" *ngIf="!edit"><i class="fas fa-edit"></i></button>
+    <button type="button" name="trash" (click)="deleteTodo()"><i class="fas fa-trash-alt"></i></button>
+  </span>
+</div>
