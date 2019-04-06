@@ -16,9 +16,19 @@
   padding: 5px;
 }
 
+.todo-list {
+  height: 100%;
+  width: 100%;
+  background: white;
+  border-radius: 5px;
+  display: flex;
+  flex-flow: column;
+}
+
 .todo-title-wrapper {
   text-align: center;
   padding: 20px;
+  flex: 0 1 auto;
 }
 
 .todo-title {
@@ -36,15 +46,9 @@
   background: linear-gradient(to right, $color1, $color2, $color5, $color4, $color3);
 }
 
-.todo-list {
-  height: 100%;
-  width: 100%;
-  background: white;
-  border-radius: 5px;
-}
-
 .todo-input-wrapper {
   display: flex;
+  flex: 0 1 auto;
   justify-content: center;
   align-items: center;
   padding: 10px 20px;
@@ -89,6 +93,37 @@
   cursor: pointer;
   background: $color4;
 }
+
+.todo-drag-list {
+  overflow-y: scroll;
+  flex: 1 1 auto;
+  margin: 10px 0;
+  position: relative;
+}
+
+// .todo-drag-list:after {
+//   content: "";
+//   position: absolute;
+//   bottom: 0;
+//   left: 0;
+//   pointer-events: none;
+//   width: 100%;
+//   height: 2rem;
+//   background: linear-gradient(to bottom, rgba(white, 0), rgba(white, 1) 80%);
+// }
+//
+// .todo-drag-list:before {
+//   content: "";
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   pointer-events: none;
+//   width: 100%;
+//   height: 1rem;
+//   background: linear-gradient(to top, rgba(white, 0), rgba(white, 1) 90%);
+// }
+
+// Angular Material CDK Styling
 
 .cdk-drag-placeholder {
   opacity: 0;

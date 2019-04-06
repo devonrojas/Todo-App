@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { FirestoreService } from './services/firestore.service';
 
+// Angular Material Imports
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
-import { Todo } from './models/todo';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -14,33 +15,38 @@ export class AppComponent {
   title = 'todo-app';
   list_name: string = 'To-do';
 
-  todos: Todo[];
+  todos: any[];
   todo_title: string;
-  todosArr: Todo[] = [];
+
+  active: boolean = false;
 
   constructor(private firestore: FirestoreService) {
     this.firestore.getTodos()
-    .subscribe((user:any) => this.todos = user.todos);
+    .pipe(
+      map(data => data.todos.map(todo => {return {title:todo}}))
+    )
+    .subscribe(res => this.todos = res);
   }
 
-  drop(event: CdkDragDrop<string[]>) {
+  drop(event: CdkDragDrop<any[]>) {
     moveItemInArray(this.todos, event.previousIndex, event.currentIndex);
     this.firestore.updateTodos(this.todos);
   }
 
   addTodo() {
-    let todo = {
-      title: this.todo_title
-    }
-    this.firestore.addTodo(todo);
+    this.firestore.addTodo(this.todo_title);
     this.todo_title = '';
   }
 
-  onDelete(todo: Todo) {
+  onDelete(todo: string) {
     todo ? this.firestore.deleteTodo(todo) : null;
   }
 
-  onEdit(todo: Todo) {
+  onEdit(todo: string) {
     todo ? this.firestore.updateTodos(this.todos) : null;
+  }
+
+  onSelect(event) {
+    this.active = event;
   }
 }

@@ -13,6 +13,13 @@
 
 .todo-title {
   flex: 1 1 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.todo-title > span {
+  max-width: 100%;
+  white-space: nowrap;
 }
 
 .todo-title input {
@@ -24,9 +31,7 @@
   box-sizing: inherit;
   margin: 0;
   padding: 0;
-  text-overflow: clip;
-  white-space: nowrap;
-  width: 400px;
+  width: 100%;
 }
 
 .todo-title input:focus {

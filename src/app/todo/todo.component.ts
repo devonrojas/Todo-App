@@ -1,5 +1,10 @@
-import { Component, AfterViewInit, Input, Output, EventEmitter, ViewChildren, QueryList } from '@angular/core';
-import { Todo } from '../models/todo';
+import { Component,
+         AfterViewInit,
+         Input,
+         Output,
+         EventEmitter,
+         ViewChildren,
+         QueryList } from '@angular/core';
 
 @Component({
   selector: 'todo',
@@ -8,18 +13,21 @@ import { Todo } from '../models/todo';
 })
 export class TodoComponent implements AfterViewInit {
 
-  @Input() todo: Todo;
-  @Output() deleted = new EventEmitter<Todo>();
-  @Output() edited = new EventEmitter<Todo>();
+  @Input() todo: any;
+  @Output() deleted = new EventEmitter<string>();
+  @Output() edited = new EventEmitter<string>();
+  @Output() selected = new EventEmitter<boolean>();
 
-  @ViewChildren('title') titleField: QueryList<any>;
+  @ViewChildren('todoInput') todoField: QueryList<any>;
 
+  // Flag for user input
   edit: boolean = false;
 
   constructor() { }
 
+  // Utilizing AfterViewInit event to detect dynamically created DOM elements
   ngAfterViewInit() {
-    this.titleField.changes.subscribe((r) => {
+    this.todoField.changes.subscribe((r) => {
       if(r.length) {
         r.first.nativeElement.focus();
       }
@@ -28,15 +36,21 @@ export class TodoComponent implements AfterViewInit {
 
   editTodo() {
     this.edit = true;
+    this.selected.emit(true);
   }
 
   saveTodo() {
     this.edit = false;
-    this.edited.emit(this.todo);
+    this.selected.emit(false);
+    this.edited.emit(this.todo.title);
   }
 
   deleteTodo() {
-    this.deleted.emit(this.todo);
+    this.deleted.emit(this.todo.title);
+  }
+
+  blur(event) {
+    event.target.blur();
   }
 
 }

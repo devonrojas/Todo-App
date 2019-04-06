@@ -1,12 +1,11 @@
-import { Injectable }                 from '@angular/core';
-import { AngularFirestore,
-         AngularFirestoreDocument,
-         AngularFirestoreCollection } from '@angular/fire/firestore';
+import { Injectable }       from '@angular/core';
 
-import { Observable } from 'rxjs';
-import { Todo } from '../models/todo';
+// Angular Material Imports
+import { AngularFirestore } from '@angular/fire/firestore';
 
-import {firestore} from 'firebase/app';
+// Misc Imports
+import { Observable }       from 'rxjs';
+import {firestore}          from 'firebase/app';
 
 @Injectable({
   providedIn: 'root'
@@ -15,28 +14,29 @@ export class FirestoreService {
 
   user: string = "jBHN86GXU6SSepoqzUYZSgbrVI72";
 
-  collection: AngularFirestoreCollection;
-  document: AngularFirestoreDocument;
-
   constructor(private afs: AngularFirestore) { }
 
   getTodos() : Observable<any> {
     return this.afs.collection('todos').doc(this.user).valueChanges();
   }
 
-  updateTodos(list: Todo[]) {
-    this.document = this.afs.collection('todos').doc(this.user);
-    this.document.update({todos: list});
+  updateTodos(list: any[]) {
+    // Mapping any[] back to string[] for database
+    list = list.map(item => item.title);
+    this.afs.collection('todos').doc(this.user).update({
+      lastUpdated: firestore.FieldValue.serverTimestamp(),
+      todos: list
+    });
   }
-  
-  addTodo(todo: Todo) {
+
+  addTodo(todo: string) {
     this.afs.collection('todos').doc(this.user).update({
       lastUpdated: firestore.FieldValue.serverTimestamp(),
       todos: firestore.FieldValue.arrayUnion(todo)
     })
   }
 
-  deleteTodo(todo: Todo) {
+  deleteTodo(todo: string) {
     this.afs.collection('todos').doc(this.user).update({
       lastUpdated: firestore.FieldValue.serverTimestamp(),
       todos: firestore.FieldValue.arrayRemove(todo)
